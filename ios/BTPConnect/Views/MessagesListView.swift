@@ -53,9 +53,6 @@ struct MessagesListView: View {
                         .clipShape(Circle())
                 }
             }
-            Text("Une seule barre d'écriture, messages visibles immédiatement, pièces jointes multiples, réponses rapides et message épinglé clair.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
         }
         .padding(.horizontal, 16)
         .padding(.top, 8)
@@ -76,7 +73,6 @@ struct ConversationRow: View {
                     .font(.title2.bold())
                     .foregroundStyle(.secondary)
             }
-
             VStack(alignment: .leading, spacing: 3) {
                 Text(conversation.artisanName)
                     .font(.headline)
@@ -102,9 +98,7 @@ struct ConversationRow: View {
                         .foregroundStyle(.secondary)
                 }
             }
-
             Spacer()
-
             VStack(alignment: .trailing, spacing: 6) {
                 Text(conversation.timestamp)
                     .font(.caption)

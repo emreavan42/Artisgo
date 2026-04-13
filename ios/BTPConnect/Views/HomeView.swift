@@ -21,7 +21,7 @@ struct HomeView: View {
                 }
                 .padding(.bottom, 20)
             }
-            .background(Color(.systemBackground))
+            .background(Color(.systemGroupedBackground))
             .navigationBarHidden(true)
             .sheet(isPresented: $showPostChantier) {
                 PostChantierView()
@@ -35,45 +35,31 @@ struct HomeView: View {
     private var headerSection: some View {
         HStack(spacing: 12) {
             HStack(spacing: 8) {
-                Image(systemName: "house.fill")
-                    .font(.title3)
-                    .foregroundStyle(.white)
-                    .frame(width: 36, height: 36)
-                    .background(Color(hex: "1A1A2E"))
-                    .clipShape(Circle())
+                ArtigoLogoView(size: 34)
                 Text("Artigo")
                     .font(.title2.bold())
                     .foregroundStyle(.primary)
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(Color(.secondarySystemGroupedBackground))
-            .clipShape(Capsule())
 
             Spacer()
 
-            Button { } label: {
-                Image(systemName: "person.crop.circle")
-                    .font(.title3)
-                    .foregroundStyle(.secondary)
-                    .frame(width: 42, height: 42)
-                    .background(Color(.secondarySystemGroupedBackground))
-                    .clipShape(Circle())
-            }
-
             Button { showNotifications = true } label: {
-                Image(systemName: "bell")
-                    .font(.title3)
+                Image(systemName: "bell.fill")
+                    .font(.body)
                     .foregroundStyle(.secondary)
                     .frame(width: 42, height: 42)
                     .background(Color(.secondarySystemGroupedBackground))
                     .clipShape(Circle())
                     .overlay(alignment: .topTrailing) {
-                        if viewModel.notifications.filter({ !$0.isRead }).count > 0 {
-                            Circle()
-                                .fill(ArtigoTheme.orange)
-                                .frame(width: 10, height: 10)
-                                .offset(x: 2, y: -2)
+                        let unreadCount = viewModel.notifications.filter({ !$0.isRead }).count
+                        if unreadCount > 0 {
+                            Text("\(unreadCount)")
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundStyle(.white)
+                                .frame(width: 18, height: 18)
+                                .background(Color.red)
+                                .clipShape(Circle())
+                                .offset(x: 4, y: -4)
                         }
                     }
             }
@@ -131,6 +117,9 @@ struct HomeView: View {
                 .clipShape(Capsule())
             }
         }
+        .padding(14)
+        .background(Color(.secondarySystemGroupedBackground))
+        .clipShape(.rect(cornerRadius: ArtigoTheme.cornerRadius))
         .padding(.horizontal, 16)
     }
 
@@ -220,33 +209,47 @@ struct HomeView: View {
     }
 
     private var quickFilters: some View {
-        let filters = ["Chantiers urgents", "Artisans disponibles aujourd'hui", "RGE", "Moins de 10 km"]
-        return VStack(alignment: .leading, spacing: 8) {
-            ForEach(Array(filters.enumerated()), id: \.offset) { _, filter in
-                Button { } label: {
-                    Text(filter)
-                        .font(.subheadline)
-                        .foregroundStyle(.primary)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 10)
-                        .background(Color(.secondarySystemGroupedBackground))
-                        .clipShape(Capsule())
-                }
+        ScrollView(.horizontal) {
+            HStack(spacing: 8) {
+                filterChip("Chantiers urgents", icon: "exclamationmark.triangle.fill")
+                filterChip("Artisans disponibles aujourd'hui", icon: "checkmark.circle.fill")
+                filterChip("Moins de 10 km", icon: "location.fill")
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, 16)
+        .contentMargins(.horizontal, 16)
+        .scrollIndicators(.hidden)
+    }
+
+    private func filterChip(_ text: String, icon: String) -> some View {
+        Button { } label: {
+            HStack(spacing: 6) {
+                Image(systemName: icon)
+                    .font(.caption)
+                    .foregroundStyle(ArtigoTheme.orange)
+                Text(text)
+                    .font(.subheadline)
+                    .foregroundStyle(.primary)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            .background(Color(.secondarySystemGroupedBackground))
+            .clipShape(Capsule())
+        }
     }
 
     private var postButton: some View {
         Button { showPostChantier = true } label: {
-            Text("Poster mon chantier")
-                .font(.headline)
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 16)
-                .background(ArtigoTheme.orange)
-                .clipShape(.rect(cornerRadius: ArtigoTheme.cornerRadius))
+            HStack(spacing: 8) {
+                Image(systemName: "plus.circle.fill")
+                    .font(.title3)
+                Text("Poster mon chantier")
+                    .font(.headline)
+            }
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(ArtigoTheme.orange)
+            .clipShape(.rect(cornerRadius: ArtigoTheme.cornerRadius))
         }
         .padding(.horizontal, 16)
     }
@@ -267,13 +270,19 @@ struct HomeView: View {
         }
         .padding(20)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(ArtigoTheme.orange)
+        .background(
+            LinearGradient(
+                colors: [ArtigoTheme.darkBlue, Color(hex: "2A5D8F")],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
         .clipShape(.rect(cornerRadius: ArtigoTheme.cornerRadius))
         .padding(.horizontal, 16)
     }
 
     private var statsSection: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: 8) {
             statItem(value: "143", label: "métiers BTP\nréférencés", highlighted: false)
             statItem(value: "143", label: "spécialités\nfiltrables", highlighted: true)
             statItem(value: "3", label: "chantiers\ncompatibles", highlighted: false)
@@ -292,7 +301,7 @@ struct HomeView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)
-        .background(highlighted ? ArtigoTheme.lightBlue : Color.clear)
+        .background(Color(.secondarySystemGroupedBackground))
         .clipShape(.rect(cornerRadius: 10))
     }
 }

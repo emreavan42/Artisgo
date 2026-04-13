@@ -8,6 +8,29 @@ enum ArtigoTheme {
     static let cornerRadius: CGFloat = 14
 }
 
+struct ArtigoLogoView: View {
+    var size: CGFloat = 32
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: size * 0.22)
+                .fill(Color(hex: "1A1A2E"))
+                .frame(width: size, height: size)
+
+            VStack(spacing: -size * 0.04) {
+                Image(systemName: "house.fill")
+                    .font(.system(size: size * 0.38, weight: .bold))
+                    .foregroundStyle(.white)
+
+                RoundedRectangle(cornerRadius: 1)
+                    .fill(ArtigoTheme.orange)
+                    .frame(width: size * 0.28, height: size * 0.22)
+                    .offset(y: -size * 0.06)
+            }
+        }
+    }
+}
+
 extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

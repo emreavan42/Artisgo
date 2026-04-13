@@ -8,7 +8,7 @@ struct ArtigoApp: App {
         WindowGroup {
             ContentView()
                 .environment(appViewModel)
-                .tint(Color(hex: "FF6200"))
+                .tint(ArtigoTheme.orange)
         }
     }
 }

@@ -23,7 +23,7 @@ struct ChatView: View {
                     .padding(.horizontal, 16)
                     .padding(.vertical, 12)
                 }
-                .onChange(of: viewModel.chatMessages.count) {
+                .onChange(of: viewModel.chatMessages.count) { _, _ in
                     if let last = viewModel.chatMessages.last {
                         withAnimation { proxy.scrollTo(last.id, anchor: .bottom) }
                     }
@@ -32,7 +32,7 @@ struct ChatView: View {
             quickReplies
             inputBar
         }
-        .background(Color(.systemBackground))
+        .background(Color(.systemGroupedBackground))
         .navigationBarHidden(true)
         .sheet(isPresented: $showEmojiPicker) {
             EmojiPickerView { emoji in
@@ -55,13 +55,19 @@ struct ChatView: View {
                     .background(Color(.secondarySystemGroupedBackground))
                     .clipShape(Circle())
             }
-            ZStack {
+            ZStack(alignment: .bottomTrailing) {
                 Circle()
                     .fill(LinearGradient(colors: [Color(.systemGray4), Color(.systemGray5)], startPoint: .top, endPoint: .bottom))
                     .frame(width: 44, height: 44)
-                Text(String(conversation.artisanName.prefix(1)))
-                    .font(.title3.bold())
-                    .foregroundStyle(.secondary)
+                    .overlay {
+                        Text(String(conversation.artisanName.prefix(1)))
+                            .font(.title3.bold())
+                            .foregroundStyle(.secondary)
+                    }
+                Circle()
+                    .fill(.green)
+                    .frame(width: 10, height: 10)
+                    .overlay(Circle().stroke(Color(.systemBackground), lineWidth: 2))
             }
             VStack(alignment: .leading, spacing: 2) {
                 Text(conversation.artisanName)
@@ -146,10 +152,10 @@ struct ChatView: View {
         HStack(spacing: 10) {
             Button { showAttachmentMenu.toggle() } label: {
                 Image(systemName: "plus")
-                    .font(.body)
-                    .foregroundStyle(.secondary)
+                    .font(.body.bold())
+                    .foregroundStyle(ArtigoTheme.orange)
                     .frame(width: 36, height: 36)
-                    .background(Color(.secondarySystemGroupedBackground))
+                    .background(ArtigoTheme.orange.opacity(0.12))
                     .clipShape(Circle())
             }
             .confirmationDialog("Envoyer", isPresented: $showAttachmentMenu) {
@@ -221,13 +227,21 @@ struct MessageBubble: View {
                     .font(.caption2)
                     .foregroundStyle(.secondary)
                 if message.isFromClient && message.isRead {
-                    Text("Lu")
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
+                    HStack(spacing: 2) {
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 8, weight: .bold))
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 8, weight: .bold))
+                    }
+                    .foregroundStyle(.blue)
                 }
             }
             if let reaction = message.reaction {
-                reactionBubbles(selected: reaction)
+                Text(reaction)
+                    .font(.title3)
+                    .padding(4)
+                    .background(Color(.secondarySystemGroupedBackground))
+                    .clipShape(Capsule())
             }
         }
         .frame(maxWidth: .infinity, alignment: message.isFromClient ? .trailing : .leading)
@@ -247,9 +261,15 @@ struct MessageBubble: View {
                                 .font(.system(size: 8, weight: .bold))
                         }
                         .foregroundStyle(ArtigoTheme.orange)
-                    } else {
+                    } else if type == .photo {
                         Image(systemName: "photo.fill")
                             .foregroundStyle(.secondary)
+                    } else if type == .video {
+                        Image(systemName: "video.fill")
+                            .foregroundStyle(.secondary)
+                    } else {
+                        Image(systemName: "location.fill")
+                            .foregroundStyle(.blue)
                     }
                 }
             VStack(alignment: .leading, spacing: 2) {
@@ -264,21 +284,5 @@ struct MessageBubble: View {
         .padding(10)
         .background(message.isFromClient ? ArtigoTheme.orange : Color(.secondarySystemGroupedBackground))
         .clipShape(.rect(cornerRadius: 12))
-    }
-
-    private func reactionBubbles(selected: String) -> some View {
-        let reactions = ["❤️", "👍", "👏", "🔥", "✅", "👀"]
-        return HStack(spacing: 6) {
-            ForEach(reactions, id: \.self) { emoji in
-                Text(emoji)
-                    .font(.body)
-                    .padding(4)
-                    .background(emoji == selected ? Color(.systemBlue).opacity(0.15) : Color(.secondarySystemGroupedBackground))
-                    .clipShape(Circle())
-                    .overlay(
-                        Circle().stroke(emoji == selected ? Color(.systemBlue) : Color.clear, lineWidth: 1.5)
-                    )
-            }
-        }
     }
 }

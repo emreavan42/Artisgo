@@ -2,7 +2,6 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(AppViewModel.self) private var viewModel
-    @AppStorage("isDarkMode") private var isDarkMode: Bool = false
     @State private var showPostChantier: Bool = false
 
     var body: some View {
@@ -25,7 +24,7 @@ struct ContentView: View {
                 ProfileView()
             }
         }
-        .tint(Color(red: 1.0, green: 0.384, blue: 0.0))
+        .tint(ArtigoTheme.orange)
         .onChange(of: viewModel.selectedTab) { oldValue, newValue in
             if newValue == .postChantier {
                 viewModel.selectedTab = oldValue
@@ -37,6 +36,5 @@ struct ContentView: View {
                 PostChantierView()
             }
         }
-        .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 }

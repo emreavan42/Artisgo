@@ -3,40 +3,44 @@ import SwiftUI
 struct ProfileView: View {
     @Environment(AppViewModel.self) private var viewModel
     @State private var showSettings: Bool = false
+    @State private var showClassement: Bool = false
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
                     profileHeader
+                    statsRow
                     documentsSection
+                    classementButton
                 }
                 .padding(.bottom, 20)
             }
-            .background(Color(.systemBackground))
+            .background(Color(.systemGroupedBackground))
             .navigationBarHidden(true)
             .navigationDestination(isPresented: $showSettings) {
                 SettingsView()
+            }
+            .sheet(isPresented: $showClassement) {
+                ClassementView()
+                    .presentationDetents([.large])
+                    .presentationDragIndicator(.visible)
             }
         }
     }
 
     private var profileHeader: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(spacing: 16) {
             HStack {
-                Button { } label: {
-                    Text("TABLEAU DE BORD")
-                        .font(.caption.bold())
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 8)
-                        .background(.white.opacity(0.2))
-                        .clipShape(Capsule())
+                HStack(spacing: 8) {
+                    ArtigoLogoView(size: 28)
+                    Text("Mon Profil")
+                        .font(.title2.bold())
                 }
                 Spacer()
                 Button { showSettings = true } label: {
                     HStack(spacing: 6) {
-                        Image(systemName: "slider.horizontal.3")
+                        Image(systemName: "gearshape.fill")
                             .font(.caption)
                         Text("Paramètres")
                             .font(.caption.bold())
@@ -48,63 +52,70 @@ struct ProfileView: View {
                     .clipShape(Capsule())
                 }
             }
+            .padding(.horizontal, 16)
+            .padding(.top, 8)
 
-            HStack(spacing: 14) {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(.white.opacity(0.15))
-                    .frame(width: 80, height: 80)
-                    .overlay {
-                        Image(systemName: "person.crop.rectangle")
-                            .font(.title2)
-                            .foregroundStyle(.white.opacity(0.5))
+            VStack(spacing: 14) {
+                ZStack(alignment: .bottomTrailing) {
+                    Circle()
+                        .fill(LinearGradient(colors: [ArtigoTheme.orange.opacity(0.3), ArtigoTheme.orange.opacity(0.1)], startPoint: .top, endPoint: .bottom))
+                        .frame(width: 90, height: 90)
+                        .overlay {
+                            Image(systemName: "person.fill")
+                                .font(.system(size: 36))
+                                .foregroundStyle(ArtigoTheme.orange.opacity(0.6))
+                        }
+                    Button { } label: {
+                        Image(systemName: "camera.fill")
+                            .font(.caption)
+                            .foregroundStyle(.white)
+                            .frame(width: 28, height: 28)
+                            .background(ArtigoTheme.orange)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color(.systemBackground), lineWidth: 2))
                     }
+                }
 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(spacing: 4) {
                     Text("Sophie Martin")
-                        .font(.title2.bold())
-                        .foregroundStyle(.white)
+                        .font(.title3.bold())
                     Text("Compte particulier · Chantier Écully")
                         .font(.caption)
-                        .foregroundStyle(.white.opacity(0.8))
-                    Text("Gère ta zone, tes documents, tes alertes et tous tes paramètres depuis un seul espace plus clair et plus fiable.")
+                        .foregroundStyle(.secondary)
+                    Text("Gère ta zone, tes documents, tes alertes et tous tes paramètres depuis un seul espace.")
                         .font(.caption2)
-                        .foregroundStyle(.white.opacity(0.7))
-                        .lineLimit(3)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 32)
                 }
             }
-
-            HStack(spacing: 0) {
-                profileStat(value: "12", label: "Contacts")
-                profileStat(value: "5", label: "Devis actifs")
-                profileStat(value: "4,9", label: "Avis\nmoyens")
-            }
         }
-        .padding(20)
-        .background(
-            LinearGradient(
-                colors: [ArtigoTheme.orange, ArtigoTheme.orange.opacity(0.85)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        )
-        .clipShape(.rect(cornerRadius: 20))
-        .padding(.horizontal, 16)
-        .padding(.top, 8)
     }
 
-    private func profileStat(value: String, label: String) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
+    private var statsRow: some View {
+        HStack(spacing: 8) {
+            profileStatCard(value: "12", label: "Contacts", icon: "person.2.fill")
+            profileStatCard(value: "5", label: "Devis actifs", icon: "doc.text.fill")
+            profileStatCard(value: "4,9", label: "Avis moyens", icon: "star.fill")
+        }
+        .padding(.horizontal, 16)
+    }
+
+    private func profileStatCard(value: String, label: String, icon: String) -> some View {
+        VStack(spacing: 6) {
+            Image(systemName: icon)
+                .font(.body)
+                .foregroundStyle(ArtigoTheme.orange)
             Text(value)
                 .font(.title2.bold())
-                .foregroundStyle(.white)
             Text(label)
                 .font(.caption2)
-                .foregroundStyle(.white.opacity(0.7))
+                .foregroundStyle(.secondary)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(12)
-        .background(.white.opacity(0.12))
-        .clipShape(.rect(cornerRadius: 10))
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 14)
+        .background(Color(.secondarySystemGroupedBackground))
+        .clipShape(.rect(cornerRadius: ArtigoTheme.cornerRadius))
     }
 
     private var documentsSection: some View {
@@ -123,16 +134,12 @@ struct ProfileView: View {
                     )
             }
 
-            Text("Assurances, certifications avec dates d'expiration, factures PDF, devis archivés, contrats et portfolio.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-
-            let columns = [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)]
-            LazyVGrid(columns: columns, spacing: 12) {
-                documentCard(icon: "checkmark.shield.fill", title: "Assurances", subtitle: "Décennale, RC pro, échéances", count: "2 documents actifs", color: ArtigoTheme.orange)
-                documentCard(icon: "rosette", title: "Certifications", subtitle: "RGE, Qualibat, labels", count: "4 justificatifs suivis", color: ArtigoTheme.orange)
-                documentCard(icon: "doc.text.fill", title: "Factures PDF", subtitle: "Historique complet", count: "", color: .secondary)
-                documentCard(icon: "slider.horizontal.3", title: "Devis archivés", subtitle: "Suivi et comparaison", count: "", color: .secondary)
+            let columns = [GridItem(.flexible(), spacing: 10), GridItem(.flexible(), spacing: 10)]
+            LazyVGrid(columns: columns, spacing: 10) {
+                documentCard(icon: "checkmark.shield.fill", title: "Assurances", subtitle: "Décennale, RC pro", count: "2 actifs", color: ArtigoTheme.orange)
+                documentCard(icon: "rosette", title: "Certifications", subtitle: "RGE, Qualibat", count: "4 suivis", color: ArtigoTheme.orange)
+                documentCard(icon: "doc.text.fill", title: "Factures PDF", subtitle: "Historique complet", count: "", color: .blue)
+                documentCard(icon: "archivebox.fill", title: "Devis archivés", subtitle: "Suivi et comparaison", count: "", color: .secondary)
             }
         }
         .padding(.horizontal, 16)
@@ -146,7 +153,6 @@ struct ProfileView: View {
                 .frame(width: 40, height: 40)
                 .background(color.opacity(0.1))
                 .clipShape(.rect(cornerRadius: 10))
-
             Text(title)
                 .font(.headline)
             Text(subtitle)
@@ -162,5 +168,35 @@ struct ProfileView: View {
         .padding(14)
         .background(Color(.secondarySystemGroupedBackground))
         .clipShape(.rect(cornerRadius: ArtigoTheme.cornerRadius))
+    }
+
+    private var classementButton: some View {
+        Button { showClassement = true } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "trophy.fill")
+                    .font(.title3)
+                    .foregroundStyle(ArtigoTheme.orange)
+                    .frame(width: 44, height: 44)
+                    .background(ArtigoTheme.orange.opacity(0.1))
+                    .clipShape(.rect(cornerRadius: 12))
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Classement du mois")
+                        .font(.headline)
+                        .foregroundStyle(.primary)
+                    Text("Voir le top artisans par métier et notes")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+            }
+            .padding(14)
+            .background(Color(.secondarySystemGroupedBackground))
+            .clipShape(.rect(cornerRadius: ArtigoTheme.cornerRadius))
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, 16)
     }
 }

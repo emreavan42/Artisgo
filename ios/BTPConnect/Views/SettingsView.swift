@@ -3,7 +3,6 @@ import SwiftUI
 struct SettingsView: View {
     @State private var searchText: String = ""
     @State private var selectedTab: Int = 0
-    @AppStorage("isDarkMode") private var isDarkMode: Bool = false
 
     var body: some View {
         ScrollView {
@@ -15,7 +14,7 @@ struct SettingsView: View {
             }
             .padding(.bottom, 20)
         }
-        .background(Color(.systemBackground))
+        .background(Color(.systemGroupedBackground))
         .navigationTitle("Paramètres")
         .navigationBarTitleDisplayMode(.large)
     }
@@ -40,28 +39,22 @@ struct SettingsView: View {
             } label: {
                 Text("Réglages unifiés")
                     .font(.subheadline.weight(.medium))
-                    .foregroundStyle(selectedTab == 0 ? ArtigoTheme.orange : .primary)
+                    .foregroundStyle(selectedTab == 0 ? .white : .primary)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 10)
-                    .background(selectedTab == 0 ? ArtigoTheme.orange.opacity(0.1) : Color.clear)
+                    .background(selectedTab == 0 ? ArtigoTheme.orange : Color(.secondarySystemGroupedBackground))
                     .clipShape(Capsule())
-                    .overlay(
-                        Capsule().stroke(selectedTab == 0 ? ArtigoTheme.orange : Color.clear, lineWidth: 1)
-                    )
             }
             Button {
                 selectedTab = 1
             } label: {
                 Text("Compte particulier")
                     .font(.subheadline.weight(.medium))
-                    .foregroundStyle(selectedTab == 1 ? ArtigoTheme.orange : .primary)
+                    .foregroundStyle(selectedTab == 1 ? .white : .primary)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 10)
-                    .background(selectedTab == 1 ? ArtigoTheme.orange.opacity(0.1) : Color.clear)
+                    .background(selectedTab == 1 ? ArtigoTheme.orange : Color(.secondarySystemGroupedBackground))
                     .clipShape(Capsule())
-                    .overlay(
-                        Capsule().stroke(selectedTab == 1 ? ArtigoTheme.orange : Color.clear, lineWidth: 1)
-                    )
             }
             Spacer()
         }
@@ -76,10 +69,10 @@ struct SettingsView: View {
             Text("Réglages centraux, zone active et compte à jour")
                 .font(.title3.bold())
                 .foregroundStyle(.white)
-            Text("Une seule page claire et dense pour piloter la carte, les notifications, les documents, la sécurité et l'assistance sans écran inutile.")
+            Text("Une seule page claire et dense pour piloter la carte, les notifications, les documents, la sécurité et l'assistance.")
                 .font(.caption)
                 .foregroundStyle(.white.opacity(0.85))
-            HStack(spacing: 0) {
+            HStack(spacing: 6) {
                 synthStat(value: "2", label: "zones\nfavorites")
                 synthStat(value: "2", label: "artisans\nsuivis")
                 synthStat(value: "14", label: "alertes\nactives")
@@ -96,10 +89,10 @@ struct SettingsView: View {
             Button { } label: {
                 Text("Changer ma zone")
                     .font(.subheadline.bold())
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(ArtigoTheme.darkBlue)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
-                    .background(Color(.systemBackground))
+                    .background(.white.opacity(0.9))
                     .clipShape(.rect(cornerRadius: 12))
             }
         }
@@ -132,29 +125,6 @@ struct SettingsView: View {
 
     private var settingsSections: some View {
         VStack(spacing: 2) {
-            // Toggle Apparence
-            HStack(spacing: 14) {
-                Image(systemName: isDarkMode ? "moon.fill" : "sun.max.fill")
-                    .font(.body)
-                    .foregroundStyle(ArtigoTheme.orange.opacity(0.7))
-                    .frame(width: 36, height: 36)
-                    .background(ArtigoTheme.orange.opacity(0.08))
-                    .clipShape(.rect(cornerRadius: 8))
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Apparence")
-                        .font(.subheadline.weight(.medium))
-                    Text(isDarkMode ? "Mode sombre activé" : "Mode clair activé")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-                Spacer()
-                Toggle("", isOn: $isDarkMode)
-                    .tint(ArtigoTheme.orange)
-            }
-            .padding(14)
-            .background(Color(.secondarySystemGroupedBackground))
-            .clipShape(.rect(cornerRadius: 12))
-
             settingsRow(icon: "person.crop.circle", title: "Mon compte", subtitle: "Photo, bannière, identité", badge: "CONFIGURABLE")
             settingsRow(icon: "mappin.circle", title: "Localisation", subtitle: "Zone active, rayon, favoris", badge: nil)
             settingsRow(icon: "bell", title: "Notifications", subtitle: "Alertes, fréquence, canaux", badge: nil)
@@ -174,7 +144,7 @@ struct SettingsView: View {
         HStack(spacing: 14) {
             Image(systemName: icon)
                 .font(.body)
-                .foregroundStyle(ArtigoTheme.orange.opacity(0.7))
+                .foregroundStyle(ArtigoTheme.orange.opacity(0.8))
                 .frame(width: 36, height: 36)
                 .background(ArtigoTheme.orange.opacity(0.08))
                 .clipShape(.rect(cornerRadius: 8))
@@ -189,10 +159,10 @@ struct SettingsView: View {
             if let badge {
                 Text(badge)
                     .font(.system(size: 8, weight: .bold))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(ArtigoTheme.orange)
                     .padding(.horizontal, 6)
                     .padding(.vertical, 3)
-                    .background(Color(.secondarySystemGroupedBackground))
+                    .background(ArtigoTheme.orange.opacity(0.1))
                     .clipShape(Capsule())
             }
             Image(systemName: "chevron.right")

@@ -9,8 +9,9 @@ struct MessagesListView: View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 0) {
                 headerSection
+                searchBar
                 ScrollView {
-                    VStack(spacing: 12) {
+                    LazyVStack(spacing: 10) {
                         ForEach(viewModel.conversations) { conversation in
                             Button {
                                 selectedConversation = conversation
@@ -25,7 +26,7 @@ struct MessagesListView: View {
                     .padding(.top, 12)
                 }
             }
-            .background(Color(.systemBackground))
+            .background(Color(.systemGroupedBackground))
             .navigationBarHidden(true)
             .navigationDestination(item: $selectedConversation) { conversation in
                 ChatView(conversation: conversation)
@@ -34,29 +35,36 @@ struct MessagesListView: View {
     }
 
     private var headerSection: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
+        HStack {
+            VStack(alignment: .leading, spacing: 2) {
+                HStack(spacing: 8) {
+                    ArtigoLogoView(size: 28)
                     Text("Messagerie")
                         .font(.largeTitle.bold())
-                    Text("Conversations chantier")
-                        .font(.subheadline.bold())
-                        .foregroundStyle(ArtigoTheme.lightBlue)
                 }
-                Spacer()
-                Button { } label: {
-                    Image(systemName: "magnifyingglass")
-                        .font(.body)
-                        .foregroundStyle(.primary)
-                        .frame(width: 42, height: 42)
-                        .background(Color(.secondarySystemGroupedBackground))
-                        .clipShape(Circle())
-                }
+                Text("Conversations chantier")
+                    .font(.subheadline.weight(.medium))
+                    .foregroundStyle(ArtigoTheme.orange)
             }
+            Spacer()
         }
         .padding(.horizontal, 16)
         .padding(.top, 8)
-        .padding(.bottom, 12)
+        .padding(.bottom, 8)
+    }
+
+    private var searchBar: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "magnifyingglass")
+                .foregroundStyle(.secondary)
+            TextField("Rechercher une conversation...", text: $searchText)
+                .font(.subheadline)
+        }
+        .padding(10)
+        .background(Color(.secondarySystemGroupedBackground))
+        .clipShape(.rect(cornerRadius: 10))
+        .padding(.horizontal, 16)
+        .padding(.bottom, 4)
     }
 }
 
@@ -65,21 +73,37 @@ struct ConversationRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            ZStack {
+            ZStack(alignment: .bottomTrailing) {
                 Circle()
                     .fill(LinearGradient(colors: [Color(.systemGray4), Color(.systemGray5)], startPoint: .top, endPoint: .bottom))
-                    .frame(width: 56, height: 56)
-                Text(String(conversation.artisanName.prefix(1)))
-                    .font(.title2.bold())
-                    .foregroundStyle(.secondary)
+                    .frame(width: 54, height: 54)
+                    .overlay {
+                        Text(String(conversation.artisanName.prefix(1)))
+                            .font(.title2.bold())
+                            .foregroundStyle(.secondary)
+                    }
+                if conversation.isProSeen {
+                    Circle()
+                        .fill(.green)
+                        .frame(width: 12, height: 12)
+                        .overlay(Circle().stroke(Color(.systemBackground), lineWidth: 2))
+                }
             }
+
             VStack(alignment: .leading, spacing: 3) {
-                Text(conversation.artisanName)
-                    .font(.headline)
-                    .foregroundStyle(.primary)
+                HStack {
+                    Text(conversation.artisanName)
+                        .font(.headline)
+                        .foregroundStyle(.primary)
+                    if conversation.isPinned {
+                        Image(systemName: "pin.fill")
+                            .font(.caption2)
+                            .foregroundStyle(ArtigoTheme.orange)
+                    }
+                }
                 Text(conversation.profession)
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(ArtigoTheme.orange)
                 Text(conversation.lastMessage)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
@@ -88,7 +112,7 @@ struct ConversationRow: View {
                     HStack(spacing: 4) {
                         Image(systemName: "checkmark")
                             .font(.caption2.bold())
-                        Text("Pro a vu")
+                        Text("Pro a vu le fil")
                             .font(.caption2.bold())
                     }
                     .foregroundStyle(.green)
@@ -107,7 +131,7 @@ struct ConversationRow: View {
                     Text("\(conversation.unreadCount)")
                         .font(.caption2.bold())
                         .foregroundStyle(.white)
-                        .frame(width: 22, height: 22)
+                        .frame(minWidth: 22, minHeight: 22)
                         .background(ArtigoTheme.orange)
                         .clipShape(Circle())
                 }

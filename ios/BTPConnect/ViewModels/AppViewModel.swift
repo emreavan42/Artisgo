@@ -40,6 +40,54 @@ class AppViewModel {
         }
     }
 
+    func sendMessage(text: String, in conversation: Conversation) {
+        let newMessage = ChatMessage(
+            id: UUID().uuidString,
+            text: text,
+            isFromClient: true,
+            timestamp: "À l'instant",
+            isRead: false,
+            isPinned: false,
+            reaction: nil,
+            attachmentType: nil,
+            attachmentName: nil,
+            attachmentSize: nil
+        )
+        chatMessages.append(newMessage)
+
+        if let index = conversations.firstIndex(where: { $0.id == conversation.id }) {
+            let conv = conversations[index]
+            conversations[index] = Conversation(
+                id: conv.id,
+                artisanName: conv.artisanName,
+                profession: conv.profession,
+                lastMessage: text,
+                timestamp: "À l'instant",
+                unreadCount: conv.unreadCount,
+                isProSeen: false,
+                lastConnection: conv.lastConnection,
+                avatarURL: conv.avatarURL,
+                isPinned: conv.isPinned
+            )
+        }
+    }
+
+    func markNotificationRead(_ id: String) {
+        if let index = notifications.firstIndex(where: { $0.id == id }) {
+            let notif = notifications[index]
+            notifications[index] = NotificationItem(
+                id: notif.id,
+                title: notif.title,
+                subtitle: notif.subtitle,
+                timestamp: notif.timestamp,
+                type: notif.type,
+                isRead: true,
+                icon: notif.icon,
+                relatedUserName: notif.relatedUserName
+            )
+        }
+    }
+
     var filteredArtisans: [Artisan] {
         var result = artisans
         if selectedMapFilter == "Pros" {
@@ -64,6 +112,5 @@ enum AppTab: Int, CaseIterable, Hashable {
     case home
     case search
     case messages
-    case favorites
     case profile
 }

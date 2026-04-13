@@ -73,20 +73,24 @@ class AppViewModel {
     }
 
     func markNotificationRead(_ id: String) {
-        if let index = notifications.firstIndex(where: { $0.id == id }) {
-            let notif = notifications[index]
-            notifications[index] = NotificationItem(
+    if let index = notifications.firstIndex(where: { $0.id == id }) {
+        var notif = notifications[index]
+        notifications.remove(at: index)
+        notifications.insert(
+            NotificationItem(
                 id: notif.id,
                 title: notif.title,
                 subtitle: notif.subtitle,
-                timestamp: notif.timestamp,
-                type: notif.type,
-                isRead: true,
                 icon: notif.icon,
+                timestamp: notif.timestamp,
+                isRead: true,
+                type: notif.type,
                 relatedUserName: notif.relatedUserName
-            )
-        }
+            ),
+            at: index
+        )
     }
+}
 
     var filteredArtisans: [Artisan] {
         var result = artisans

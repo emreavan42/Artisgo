@@ -3,6 +3,7 @@ import SwiftUI
 struct SettingsView: View {
     @State private var searchText: String = ""
     @State private var selectedTab: Int = 0
+    @AppStorage("isDarkMode") private var isDarkMode: Bool = false
 
     var body: some View {
         ScrollView {
@@ -48,7 +49,6 @@ struct SettingsView: View {
                         Capsule().stroke(selectedTab == 0 ? ArtigoTheme.orange : Color.clear, lineWidth: 1)
                     )
             }
-
             Button {
                 selectedTab = 1
             } label: {
@@ -63,7 +63,6 @@ struct SettingsView: View {
                         Capsule().stroke(selectedTab == 1 ? ArtigoTheme.orange : Color.clear, lineWidth: 1)
                     )
             }
-
             Spacer()
         }
         .padding(.horizontal, 16)
@@ -74,21 +73,17 @@ struct SettingsView: View {
             Text("VUE SYNTHÈSE")
                 .font(.caption.bold())
                 .foregroundStyle(.white.opacity(0.8))
-
             Text("Réglages centraux, zone active et compte à jour")
                 .font(.title3.bold())
                 .foregroundStyle(.white)
-
             Text("Une seule page claire et dense pour piloter la carte, les notifications, les documents, la sécurité et l'assistance sans écran inutile.")
                 .font(.caption)
                 .foregroundStyle(.white.opacity(0.85))
-
             HStack(spacing: 0) {
                 synthStat(value: "2", label: "zones\nfavorites")
                 synthStat(value: "2", label: "artisans\nsuivis")
                 synthStat(value: "14", label: "alertes\nactives")
             }
-
             Button { } label: {
                 Text("Voir la carte interactive maintenant")
                     .font(.subheadline.bold())
@@ -98,7 +93,6 @@ struct SettingsView: View {
                     .background(ArtigoTheme.orange)
                     .clipShape(.rect(cornerRadius: 12))
             }
-
             Button { } label: {
                 Text("Changer ma zone")
                     .font(.subheadline.bold())
@@ -138,6 +132,29 @@ struct SettingsView: View {
 
     private var settingsSections: some View {
         VStack(spacing: 2) {
+            // Toggle Apparence
+            HStack(spacing: 14) {
+                Image(systemName: isDarkMode ? "moon.fill" : "sun.max.fill")
+                    .font(.body)
+                    .foregroundStyle(ArtigoTheme.orange.opacity(0.7))
+                    .frame(width: 36, height: 36)
+                    .background(ArtigoTheme.orange.opacity(0.08))
+                    .clipShape(.rect(cornerRadius: 8))
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Apparence")
+                        .font(.subheadline.weight(.medium))
+                    Text(isDarkMode ? "Mode sombre activé" : "Mode clair activé")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Toggle("", isOn: $isDarkMode)
+                    .tint(ArtigoTheme.orange)
+            }
+            .padding(14)
+            .background(Color(.secondarySystemGroupedBackground))
+            .clipShape(.rect(cornerRadius: 12))
+
             settingsRow(icon: "person.crop.circle", title: "Mon compte", subtitle: "Photo, bannière, identité", badge: "CONFIGURABLE")
             settingsRow(icon: "mappin.circle", title: "Localisation", subtitle: "Zone active, rayon, favoris", badge: nil)
             settingsRow(icon: "bell", title: "Notifications", subtitle: "Alertes, fréquence, canaux", badge: nil)
@@ -161,7 +178,6 @@ struct SettingsView: View {
                 .frame(width: 36, height: 36)
                 .background(ArtigoTheme.orange.opacity(0.08))
                 .clipShape(.rect(cornerRadius: 8))
-
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
                     .font(.subheadline.weight(.medium))
@@ -169,9 +185,7 @@ struct SettingsView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
-
             Spacer()
-
             if let badge {
                 Text(badge)
                     .font(.system(size: 8, weight: .bold))
@@ -181,7 +195,6 @@ struct SettingsView: View {
                     .background(Color(.secondarySystemGroupedBackground))
                     .clipShape(Capsule())
             }
-
             Image(systemName: "chevron.right")
                 .font(.caption)
                 .foregroundStyle(.tertiary)

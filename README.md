@@ -1,2 +1,0 @@
-# Artigo
-Created by Rork

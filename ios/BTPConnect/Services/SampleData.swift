@@ -25,10 +25,10 @@ enum SampleData {
     ]
 
     static let notifications: [NotificationItem] = [
-        NotificationItem(id: "1", title: "Nouveau message", subtitle: "Julien Mercier vous a envoyé un message", icon: "message.fill", timestamp: "Il y a 5 min", isRead: false, type: .message),
-        NotificationItem(id: "2", title: "Devis reçu", subtitle: "BTP Durand & Fils a envoyé un devis", icon: "doc.text.fill", timestamp: "Il y a 2h", isRead: false, type: .devis),
-        NotificationItem(id: "3", title: "Chantier urgent", subtitle: "Fuite d'eau détectée à Écully", icon: "exclamationmark.triangle.fill", timestamp: "Il y a 4h", isRead: true, type: .chantier),
-        NotificationItem(id: "4", title: "Nouvel avis", subtitle: "Vous avez reçu un avis 5 étoiles", icon: "star.fill", timestamp: "Hier", isRead: true, type: .avis)
+        NotificationItem(id: "1", title: "Nouveau message", subtitle: "Julien Mercier vous a envoyé un message", icon: "message.fill", timestamp: "Il y a 5 min", isRead: false, type: .message, relatedUserName: "Julien Mercier"),
+        NotificationItem(id: "2", title: "Devis reçu", subtitle: "BTP Durand & Fils a envoyé un devis", icon: "doc.text.fill", timestamp: "Il y a 2h", isRead: false, type: .devis, relatedUserName: "BTP Durand & Fils"),
+        NotificationItem(id: "3", title: "Chantier urgent", subtitle: "Fuite d'eau détectée à Écully", icon: "exclamationmark.triangle.fill", timestamp: "Il y a 4h", isRead: true, type: .chantier, relatedUserName: nil),
+        NotificationItem(id: "4", title: "Nouvel avis", subtitle: "Vous avez reçu un avis 5 étoiles", icon: "star.fill", timestamp: "Hier", isRead: true, type: .avis, relatedUserName: nil)
     ]
 
     static let chantiers: [Chantier] = [

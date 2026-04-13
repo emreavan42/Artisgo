@@ -115,6 +115,7 @@ class AppViewModel {
 enum AppTab: Int, CaseIterable, Hashable {
     case home
     case search
+    case postChantier
     case messages
     case profile
 }

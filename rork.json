@@ -2,7 +2,7 @@
   "$schema": "https://rork.com/schema/rork.json",
   "apps": [
     {
-      "name": "BTP Connect",
+      "name": "ArtisGO",
       "path": "ios",
       "framework": "swift"
     }

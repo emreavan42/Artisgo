@@ -103,7 +103,7 @@ struct ConversationRow: View {
                 }
                 Text(conversation.profession)
                     .font(.caption)
-                    .foregroundStyle(ArtigoTheme.orange)
+                    .foregroundStyle(ArtisgoTheme.orange)
                 Text(conversation.lastMessage)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)

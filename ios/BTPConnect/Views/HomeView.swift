@@ -168,7 +168,7 @@ struct HomeView: View {
                 endPoint: .bottomTrailing
             )
         )
-        .clipShape(.rect(cornerRadius: ArtigoTheme.cornerRadius))
+        .clipShape(.rect(cornerRadius: ArtisgoTheme.cornerRadius))
     }
 
     private var bestArtisansCard: some View {
@@ -205,7 +205,7 @@ struct HomeView: View {
                 endPoint: .bottomTrailing
             )
         )
-        .clipShape(.rect(cornerRadius: ArtigoTheme.cornerRadius))
+        .clipShape(.rect(cornerRadius: ArtisgoTheme.cornerRadius))
     }
 
     private var quickFilters: some View {
@@ -225,7 +225,7 @@ struct HomeView: View {
             HStack(spacing: 6) {
                 Image(systemName: icon)
                     .font(.caption)
-                    .foregroundStyle(ArtigoTheme.orange)
+                    .foregroundStyle(ArtisgoTheme.orange)
                 Text(text)
                     .font(.subheadline)
                     .foregroundStyle(.primary)
@@ -248,7 +248,7 @@ struct HomeView: View {
             .foregroundStyle(.white)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
-            .background(ArtigoTheme.orange)
+            .background(ArtisgoTheme.orange)
             .clipShape(.rect(cornerRadius: ArtisgoTheme.cornerRadius))
         }
         .padding(.horizontal, 16)

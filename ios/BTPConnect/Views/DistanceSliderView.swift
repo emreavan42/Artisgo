@@ -35,7 +35,7 @@ struct DistanceSliderView: View {
                     Circle()
                         .fill(ArtisgoTheme.orange)
                         .frame(width: 24, height: 24)
-                        .shadow(color: ArtigoTheme.orange.opacity(0.3), radius: 4, y: 2)
+                        .shadow(color: ArtisgoTheme.orange.opacity(0.3), radius: 4, y: 2)
                         .offset(x: CGFloat(currentIndex) * stepWidth - 12)
                         .gesture(
                             DragGesture()

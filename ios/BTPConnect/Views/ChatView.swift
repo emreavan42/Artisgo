@@ -111,7 +111,7 @@ struct ChatView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "pin.fill")
                         .font(.caption)
-                        .foregroundStyle(ArtigoTheme.orange)
+                        .foregroundStyle(ArtisgoTheme.orange)
                     Text(pinned.text)
                         .font(.caption)
                         .foregroundStyle(.secondary)

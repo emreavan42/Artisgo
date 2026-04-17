@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum ArtigoTheme {
+enum ArtisgoTheme {
     static let orange = Color(hex: "FF6200")
     static let lightBlue = Color(hex: "E8F4FD")
     static let darkBlue = Color(hex: "1B3A5C")
@@ -8,7 +8,7 @@ enum ArtigoTheme {
     static let cornerRadius: CGFloat = 14
 }
 
-struct ArtigoLogoView: View {
+struct ArtisgoLogoView: View {
     var size: CGFloat = 32
 
     var body: some View {
@@ -23,7 +23,7 @@ struct ArtigoLogoView: View {
                     .foregroundStyle(.white)
 
                 RoundedRectangle(cornerRadius: 1)
-                    .fill(ArtigoTheme.orange)
+                    .fill(ArtisgoTheme.orange)
                     .frame(width: size * 0.28, height: size * 0.22)
                     .offset(y: -size * 0.06)
             }

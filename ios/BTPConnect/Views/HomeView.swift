@@ -35,7 +35,7 @@ struct HomeView: View {
     private var headerSection: some View {
         HStack(spacing: 12) {
             HStack(spacing: 8) {
-                ArtigoLogoView(size: 34)
+                ArtisgoLogoView(size: 34)
                 Text("Artisgo")
                     .font(.title2.bold())
                     .foregroundStyle(.primary)
@@ -113,13 +113,13 @@ struct HomeView: View {
                 .foregroundStyle(.white)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
-                .background(ArtigoTheme.orange)
+                .background(ArtisgoTheme.orange)
                 .clipShape(Capsule())
             }
         }
         .padding(14)
         .background(Color(.secondarySystemGroupedBackground))
-        .clipShape(.rect(cornerRadius: ArtigoTheme.cornerRadius))
+        .clipShape(.rect(cornerRadius: ArtisgoTheme.cornerRadius))
         .padding(.horizontal, 16)
     }
 

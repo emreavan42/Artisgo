@@ -12,37 +12,37 @@
 			containerPortal = 105FC5722E9EAD3100EA8BCF /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 105FC5792E9EAD3100EA8BCF;
-			remoteInfo = BTPConnect;
+			remoteInfo = ArtisGO;
 		};
 		105FC5942E9EAD3200EA8BCF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 105FC5722E9EAD3100EA8BCF /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 105FC5792E9EAD3100EA8BCF;
-			remoteInfo = BTPConnect;
+			remoteInfo = ArtisGO;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		105FC57A2E9EAD3100EA8BCF /* BTPConnect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BTPConnect.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		105FC5892E9EAD3200EA8BCF /* BTPConnectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BTPConnectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		105FC5932E9EAD3200EA8BCF /* BTPConnectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BTPConnectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		105FC57A2E9EAD3100EA8BCF /* ArtisGO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtisGO.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		105FC5892E9EAD3200EA8BCF /* ArtisGOTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArtisGOTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		105FC5932E9EAD3200EA8BCF /* ArtisGOUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArtisGOUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		105FC57C2E9EAD3100EA8BCF /* BTPConnect */ = {
+		105FC57C2E9EAD3100EA8BCF /* ArtisGO */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = BTPConnect;
+			path = ArtisGO;
 			sourceTree = "<group>";
 		};
-		105FC58C2E9EAD3200EA8BCF /* BTPConnectTests */ = {
+		105FC58C2E9EAD3200EA8BCF /* ArtisGOTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = BTPConnectTests;
+			path = ArtisGOTests;
 			sourceTree = "<group>";
 		};
-		105FC5962E9EAD3200EA8BCF /* BTPConnectUITests */ = {
+		105FC5962E9EAD3200EA8BCF /* ArtisGOUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = BTPConnectUITests;
+			path = ArtisGOUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,9 +75,9 @@
 		105FC5712E9EAD3100EA8BCF = {
 			isa = PBXGroup;
 			children = (
-				105FC57C2E9EAD3100EA8BCF /* BTPConnect */,
-				105FC58C2E9EAD3200EA8BCF /* BTPConnectTests */,
-				105FC5962E9EAD3200EA8BCF /* BTPConnectUITests */,
+				105FC57C2E9EAD3100EA8BCF /* ArtisGO */,
+				105FC58C2E9EAD3200EA8BCF /* ArtisGOTests */,
+				105FC5962E9EAD3200EA8BCF /* ArtisGOUITests */,
 				105FC57B2E9EAD3100EA8BCF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,9 +85,9 @@
 		105FC57B2E9EAD3100EA8BCF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				105FC57A2E9EAD3100EA8BCF /* BTPConnect.app */,
-				105FC5892E9EAD3200EA8BCF /* BTPConnectTests.xctest */,
-				105FC5932E9EAD3200EA8BCF /* BTPConnectUITests.xctest */,
+				105FC57A2E9EAD3100EA8BCF /* ArtisGO.app */,
+				105FC5892E9EAD3200EA8BCF /* ArtisGOTests.xctest */,
+				105FC5932E9EAD3200EA8BCF /* ArtisGOUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,9 +95,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		105FC5792E9EAD3100EA8BCF /* BTPConnect */ = {
+		105FC5792E9EAD3100EA8BCF /* ArtisGO */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 105FC59D2E9EAD3200EA8BCF /* Build configuration list for PBXNativeTarget "BTPConnect" */;
+			buildConfigurationList = 105FC59D2E9EAD3200EA8BCF /* Build configuration list for PBXNativeTarget "ArtisGO" */;
 			buildPhases = (
 				105FC5762E9EAD3100EA8BCF /* Sources */,
 				105FC5772E9EAD3100EA8BCF /* Frameworks */,
@@ -108,18 +108,18 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				105FC57C2E9EAD3100EA8BCF /* BTPConnect */,
+				105FC57C2E9EAD3100EA8BCF /* ArtisGO */,
 			);
-			name = BTPConnect;
+			name = ArtisGO;
 			packageProductDependencies = (
 			);
-			productName = BTPConnect;
-			productReference = 105FC57A2E9EAD3100EA8BCF /* BTPConnect.app */;
+			productName = ArtisGO;
+			productReference = 105FC57A2E9EAD3100EA8BCF /* ArtisGO.app */;
 			productType = "com.apple.product-type.application";
 		};
-		105FC5882E9EAD3200EA8BCF /* BTPConnectTests */ = {
+		105FC5882E9EAD3200EA8BCF /* ArtisGOTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 105FC5A02E9EAD3200EA8BCF /* Build configuration list for PBXNativeTarget "BTPConnectTests" */;
+			buildConfigurationList = 105FC5A02E9EAD3200EA8BCF /* Build configuration list for PBXNativeTarget "ArtisGOTests" */;
 			buildPhases = (
 				105FC5852E9EAD3200EA8BCF /* Sources */,
 				105FC5862E9EAD3200EA8BCF /* Frameworks */,
@@ -131,18 +131,18 @@
 				105FC58B2E9EAD3200EA8BCF /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				105FC58C2E9EAD3200EA8BCF /* BTPConnectTests */,
+				105FC58C2E9EAD3200EA8BCF /* ArtisGOTests */,
 			);
-			name = BTPConnectTests;
+			name = ArtisGOTests;
 			packageProductDependencies = (
 			);
-			productName = BTPConnectTests;
-			productReference = 105FC5892E9EAD3200EA8BCF /* BTPConnectTests.xctest */;
+			productName = ArtisGOTests;
+			productReference = 105FC5892E9EAD3200EA8BCF /* ArtisGOTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		105FC5922E9EAD3200EA8BCF /* BTPConnectUITests */ = {
+		105FC5922E9EAD3200EA8BCF /* ArtisGOUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 105FC5A32E9EAD3200EA8BCF /* Build configuration list for PBXNativeTarget "BTPConnectUITests" */;
+			buildConfigurationList = 105FC5A32E9EAD3200EA8BCF /* Build configuration list for PBXNativeTarget "ArtisGOUITests" */;
 			buildPhases = (
 				105FC58F2E9EAD3200EA8BCF /* Sources */,
 				105FC5902E9EAD3200EA8BCF /* Frameworks */,
@@ -154,13 +154,13 @@
 				105FC5952E9EAD3200EA8BCF /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				105FC5962E9EAD3200EA8BCF /* BTPConnectUITests */,
+				105FC5962E9EAD3200EA8BCF /* ArtisGOUITests */,
 			);
-			name = BTPConnectUITests;
+			name = ArtisGOUITests;
 			packageProductDependencies = (
 			);
-			productName = BTPConnectUITests;
-			productReference = 105FC5932E9EAD3200EA8BCF /* BTPConnectUITests.xctest */;
+			productName = ArtisGOUITests;
+			productReference = 105FC5932E9EAD3200EA8BCF /* ArtisGOUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -186,7 +186,8 @@
 					};
 				};
 			};
-			buildConfigurationList = 105FC5752E9EAD3100EA8BCF /* Build configuration list for PBXProject "BTPConnect" */;
+			buildConfigurationList = 105FC5752E9EAD3100EA8BCF /* Build configuration list for PBXProject "ArtisGO" */;
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -200,9 +201,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				105FC5792E9EAD3100EA8BCF /* BTPConnect */,
-				105FC5882E9EAD3200EA8BCF /* BTPConnectTests */,
-				105FC5922E9EAD3200EA8BCF /* BTPConnectUITests */,
+				105FC5792E9EAD3100EA8BCF /* ArtisGO */,
+				105FC5882E9EAD3200EA8BCF /* ArtisGOTests */,
+				105FC5922E9EAD3200EA8BCF /* ArtisGOUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -258,12 +259,12 @@
 /* Begin PBXTargetDependency section */
 		105FC58B2E9EAD3200EA8BCF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 105FC5792E9EAD3100EA8BCF /* BTPConnect */;
+			target = 105FC5792E9EAD3100EA8BCF /* ArtisGO */;
 			targetProxy = 105FC58A2E9EAD3200EA8BCF /* PBXContainerItemProxy */;
 		};
 		105FC5952E9EAD3200EA8BCF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 105FC5792E9EAD3100EA8BCF /* BTPConnect */;
+			target = 105FC5792E9EAD3100EA8BCF /* ArtisGO */;
 			targetProxy = 105FC5942E9EAD3200EA8BCF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -468,7 +469,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "app.rork.w6lwgdnic49e0ejk1x6ra.tests";
+				PRODUCT_BUNDLE_IDENTIFIER = app.rork.w6lwgdnic49e0ejk1x6ra.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -476,7 +477,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BTPConnect.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BTPConnect";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ArtisGO.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ArtisGO";
 			};
 			name = Debug;
 		};
@@ -490,7 +491,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "app.rork.w6lwgdnic49e0ejk1x6ra.tests";
+				PRODUCT_BUNDLE_IDENTIFIER = app.rork.w6lwgdnic49e0ejk1x6ra.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -498,7 +499,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BTPConnect.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BTPConnect";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ArtisGO.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ArtisGO";
 			};
 			name = Release;
 		};
@@ -510,7 +511,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "app.rork.w6lwgdnic49e0ejk1x6ra.uitests";
+				PRODUCT_BUNDLE_IDENTIFIER = app.rork.w6lwgdnic49e0ejk1x6ra.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -518,7 +519,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = BTPConnect;
+				TEST_TARGET_NAME = ArtisGO;
 			};
 			name = Debug;
 		};
@@ -530,7 +531,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "app.rork.w6lwgdnic49e0ejk1x6ra.uitests";
+				PRODUCT_BUNDLE_IDENTIFIER = app.rork.w6lwgdnic49e0ejk1x6ra.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -538,14 +539,14 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = BTPConnect;
+				TEST_TARGET_NAME = ArtisGO;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		105FC5752E9EAD3100EA8BCF /* Build configuration list for PBXProject "BTPConnect" */ = {
+		105FC5752E9EAD3100EA8BCF /* Build configuration list for PBXProject "ArtisGO" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				105FC59B2E9EAD3200EA8BCF /* Debug */,
@@ -554,7 +555,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		105FC59D2E9EAD3200EA8BCF /* Build configuration list for PBXNativeTarget "BTPConnect" */ = {
+		105FC59D2E9EAD3200EA8BCF /* Build configuration list for PBXNativeTarget "ArtisGO" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				105FC59E2E9EAD3200EA8BCF /* Debug */,
@@ -563,7 +564,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		105FC5A02E9EAD3200EA8BCF /* Build configuration list for PBXNativeTarget "BTPConnectTests" */ = {
+		105FC5A02E9EAD3200EA8BCF /* Build configuration list for PBXNativeTarget "ArtisGOTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				105FC5A12E9EAD3200EA8BCF /* Debug */,
@@ -572,7 +573,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		105FC5A32E9EAD3200EA8BCF /* Build configuration list for PBXNativeTarget "BTPConnectUITests" */ = {
+		105FC5A32E9EAD3200EA8BCF /* Build configuration list for PBXNativeTarget "ArtisGOUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				105FC5A42E9EAD3200EA8BCF /* Debug */,

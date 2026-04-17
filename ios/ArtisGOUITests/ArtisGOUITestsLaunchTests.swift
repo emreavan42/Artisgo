@@ -1,13 +1,13 @@
 //
-//  BTPConnectUITestsLaunchTests.swift
-//  BTPConnectUITests
+//  ArtisGOUITestsLaunchTests.swift
+//  ArtisGOUITests
 //
 //  Created by Rork on April 2, 2026.
 //
 
 import XCTest
 
-final class BTPConnectUITestsLaunchTests: XCTestCase {
+final class ArtisGOUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

@@ -24,7 +24,7 @@ struct ContentView: View {
                 ProfileView()
             }
         }
-        .tint(ArtigoTheme.orange)
+        .tint(ArtisgoTheme.orange)
         .onChange(of: viewModel.selectedTab) { oldValue, newValue in
             if newValue == .postChantier {
                 viewModel.selectedTab = oldValue

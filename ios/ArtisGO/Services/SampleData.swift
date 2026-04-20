@@ -56,7 +56,25 @@ enum SampleData {
         "Terrassement"
     ]
 
-    static let quickReplies: [String] = [
-        "OK pour jeudi", "Besoin de photos", "Envoyer devis"
+    static let quickReplies: [QuickReply] = [
+        QuickReply(
+            label: "👋 Se présenter",
+            text: "Bonjour, je vous contacte au sujet de votre chantier. 😊"
+        ),
+        QuickReply(
+            label: "📸 Demander des photos",
+            text: "Pourriez-vous m'envoyer quelques photos du chantier ? Cela m'aidera à mieux évaluer le travail à prévoir."
+        ),
+        QuickReply(
+            label: "📅 Proposer un rendez-vous",
+            text: "Souhaitez-vous qu'on se rencontre sur place pour voir le chantier ? Je peux passer cette semaine."
+        )
     ]
+}
+
+/// Réponse rapide avec un libellé court affiché sur le bouton
+/// et un texte complet envoyé dans le chat
+struct QuickReply {
+    let label: String
+    let text: String
 }

@@ -128,11 +128,11 @@ struct ChatView: View {
     private var quickReplies: some View {
         ScrollView(.horizontal) {
             HStack(spacing: 8) {
-                ForEach(SampleData.quickReplies, id: \.self) { reply in
+                ForEach(SampleData.quickReplies, id: \.label) { reply in
                     Button {
-                        messageText = reply
+                        messageText = reply.text
                     } label: {
-                        Text(reply)
+                        Text(reply.label)
                             .font(.subheadline.weight(.medium))
                             .foregroundStyle(.primary)
                             .padding(.horizontal, 14)
@@ -172,8 +172,9 @@ struct ChatView: View {
                 Button {
                     showEmojiPicker.toggle()
                 } label: {
-                    Text("😊")
+                    Image(systemName: "face.smiling")
                         .font(.title3)
+                        .foregroundStyle(.secondary)
                 }
             }
             .padding(.horizontal, 14)

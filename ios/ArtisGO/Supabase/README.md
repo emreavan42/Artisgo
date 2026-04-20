@@ -17,13 +17,27 @@ Ce dossier contient tout le code lié à l'intégration Supabase.
 
 ## Tables Supabase correspondantes
 
-- profiles → Profile.swift
-- artisan_profiles → ArtisanProfile.swift
-- chantiers → ChantierDB.swift
-- (autres modèles à ajouter : conversation, message, review, document)
+| Table Supabase | Modèle Swift | Fichier |
+|---|---|---|
+| `profiles` | `Profile` | `Models/Profile.swift` |
+| `artisan_profiles` | `ArtisanProfile` | `Models/ArtisanProfile.swift` |
+| `chantiers` | `ChantierDB` ⚠️ | `Models/ChantierDB.swift` |
+| `chantier_photos` | `ChantierPhoto` | `Models/ChantierPhoto.swift` |
+| `conversations` | `ConversationDB` ⚠️ | `Models/ConversationDB.swift` |
+| `messages` | `MessageDB` ⚠️ | `Models/MessageDB.swift` |
+| `message_attachments` | `MessageAttachment` | `Models/MessageAttachment.swift` |
+| `reviews` | `Review` | `Models/Review.swift` |
+| `documents` | `Document` | `Models/Document.swift` |
+| `device_tokens` | `DeviceToken` | `Models/DeviceToken.swift` |
 
-## Note sur le nommage
+## Note sur le nommage (suffixe DB)
 
-Le modèle `ChantierDB.swift` est nommé ainsi pour éviter un conflit de compilation
-avec le struct `Chantier` existant dans `ios/ArtisGO/Models/Chantier.swift`.
-Ces deux modèles seront fusionnés lors de la migration complète vers Supabase.
+Les modèles marqués ⚠️ ont été renommés avec le suffixe `DB` pour éviter des
+conflits de compilation avec des structs du même nom déjà présents dans
+`ios/ArtisGO/Models/` (modèles UI locaux) :
+
+- `ChantierDB` ← conflit avec `struct Chantier` dans `Models/Chantier.swift`
+- `ConversationDB` ← conflit avec `struct Conversation` dans `Models/Conversation.swift`
+- `MessageDB` ← `struct ChatMessage` existe dans `Models/ChatMessage.swift`
+
+Ces modèles DB et UI seront fusionnés lors de la migration complète vers Supabase.

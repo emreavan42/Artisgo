@@ -407,6 +407,7 @@
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "artisGO utilise votre microphone pour enregistrer le son des vidéos de chantier.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "artisGO accède à votre galerie pour attacher des photos et vidéos à vos messages.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "artisGO peut enregistrer des photos et vidéos dans votre galerie.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "artisGO utilise votre localisation pour vous aider à indiquer la ville de vos chantiers et partager précisément votre adresse avec les artisans que vous choisissez.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -445,6 +446,7 @@
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "artisGO utilise votre microphone pour enregistrer le son des vidéos de chantier.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "artisGO accède à votre galerie pour attacher des photos et vidéos à vos messages.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "artisGO peut enregistrer des photos et vidéos dans votre galerie.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "artisGO utilise votre localisation pour vous aider à indiquer la ville de vos chantiers et partager précisément votre adresse avec les artisans que vous choisissez.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

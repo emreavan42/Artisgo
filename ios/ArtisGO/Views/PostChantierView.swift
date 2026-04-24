@@ -1,4 +1,5 @@
 import SwiftUI
+import CoreLocation
 
 struct PostChantierView: View {
     @Environment(\.dismiss) private var dismiss
@@ -8,7 +9,16 @@ struct PostChantierView: View {
     @State private var description: String = ""
     @State private var budget: String = ""
     @State private var location: String = ""
+    @State private var ville: String = ""
+    @State private var codePostal: String = ""
+    @State private var latitude: Double = 0
+    @State private var longitude: Double = 0
     @State private var isUrgent: Bool = false
+    @State private var locationService = LocationService()
+    @State private var locationErrorMessage: String? = nil
+    @State private var isFetchingLocation: Bool = false
+    @State private var citySuggestions: [GeocodedPlace] = []
+    @State private var searchTask: Task<Void, Never>? = nil
 
     private let totalSteps = 5
 
@@ -167,20 +177,153 @@ struct PostChantierView: View {
     }
 
     private var locationStep: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            Text("3. Localisation du chantier")
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Où se trouve le chantier ?")
                 .font(.headline)
 
-            HStack(spacing: 10) {
-                Image(systemName: "mappin")
-                    .foregroundStyle(.secondary)
-                TextField("Adresse ou ville...", text: $location)
-                    .font(.subheadline)
+            // Bouton GPS
+            Button {
+                Task { await useCurrentLocation() }
+            } label: {
+                HStack(spacing: 10) {
+                    if isFetchingLocation {
+                        ProgressView()
+                    } else {
+                        Image(systemName: "location.fill")
+                    }
+                    Text(isFetchingLocation ? "Localisation..." : "Utiliser ma position")
+                        .font(.subheadline.weight(.semibold))
+                }
+                .foregroundStyle(ArtisgoTheme.darkBlue)
+                .frame(maxWidth: .infinity)
+                .frame(height: 50)
+                .background(Color.white)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(ArtisgoTheme.darkBlue, lineWidth: 1.5)
+                )
             }
-            .padding(12)
-            .background(Color(.secondarySystemGroupedBackground))
-            .clipShape(.rect(cornerRadius: 12))
+            .disabled(isFetchingLocation)
+
+            if let err = locationErrorMessage {
+                Text(err)
+                    .font(.caption)
+                    .foregroundStyle(.red)
+            }
+
+            // Séparateur "ou"
+            HStack(spacing: 12) {
+                Rectangle().fill(Color(.systemGray4)).frame(height: 1)
+                Text("ou").font(.caption).foregroundStyle(.secondary)
+                Rectangle().fill(Color(.systemGray4)).frame(height: 1)
+            }
+
+            // Champ ville avec autocomplete
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Ville *")
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundStyle(.secondary)
+                TextField("Ex: Saint-Étienne", text: $ville)
+                    .font(.subheadline)
+                    .padding(12)
+                    .background(Color(.secondarySystemGroupedBackground))
+                    .clipShape(.rect(cornerRadius: 12))
+                    .onChange(of: ville) { _, newValue in
+                        scheduleCitySearch(newValue)
+                    }
+
+                if !citySuggestions.isEmpty {
+                    VStack(alignment: .leading, spacing: 0) {
+                        ForEach(citySuggestions.prefix(5)) { place in
+                            Button {
+                                selectSuggestion(place)
+                            } label: {
+                                HStack {
+                                    Image(systemName: "mappin.circle.fill")
+                                        .foregroundStyle(ArtisgoTheme.orange)
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(place.ville).font(.subheadline).foregroundStyle(.primary)
+                                        if !place.codePostal.isEmpty {
+                                            Text(place.codePostal).font(.caption).foregroundStyle(.secondary)
+                                        }
+                                    }
+                                    Spacer()
+                                }
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 10)
+                                .contentShape(Rectangle())
+                            }
+                            if place.id != citySuggestions.prefix(5).last?.id {
+                                Divider()
+                            }
+                        }
+                    }
+                    .background(Color(.secondarySystemGroupedBackground))
+                    .clipShape(.rect(cornerRadius: 12))
+                }
+            }
+
+            // Code postal
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Code postal *")
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundStyle(.secondary)
+                TextField("42000", text: $codePostal)
+                    .font(.subheadline)
+                    .keyboardType(.numberPad)
+                    .onChange(of: codePostal) { _, newValue in
+                        let filtered = String(newValue.filter { $0.isNumber }.prefix(5))
+                        if filtered != newValue { codePostal = filtered }
+                    }
+                    .padding(12)
+                    .background(Color(.secondarySystemGroupedBackground))
+                    .clipShape(.rect(cornerRadius: 12))
+            }
         }
+    }
+
+    // Utilise la position GPS actuelle
+    private func useCurrentLocation() async {
+        isFetchingLocation = true
+        locationErrorMessage = nil
+        defer { isFetchingLocation = false }
+        do {
+            let loc = try await locationService.requestCurrentLocation()
+            let place = try await locationService.reverseGeocode(loc)
+            ville = place.ville
+            codePostal = place.codePostal
+            latitude = loc.coordinate.latitude
+            longitude = loc.coordinate.longitude
+            citySuggestions = []
+        } catch LocationError.denied {
+            locationErrorMessage = "Autorisez la localisation dans Réglages, ou tapez votre ville manuellement."
+        } catch {
+            locationErrorMessage = "Impossible de récupérer la position. Tapez votre ville manuellement."
+        }
+    }
+
+    // Recherche asynchrone de villes (debounce 300ms)
+    private func scheduleCitySearch(_ query: String) {
+        searchTask?.cancel()
+        guard query.count >= 2 else {
+            citySuggestions = []
+            return
+        }
+        searchTask = Task {
+            try? await Task.sleep(for: .milliseconds(300))
+            if Task.isCancelled { return }
+            let results = (try? await locationService.searchCities(query)) ?? []
+            if Task.isCancelled { return }
+            citySuggestions = results
+        }
+    }
+
+    private func selectSuggestion(_ place: GeocodedPlace) {
+        ville = place.ville
+        codePostal = place.codePostal
+        latitude = place.coordinate.latitude
+        longitude = place.coordinate.longitude
+        citySuggestions = []
     }
 
     private var budgetStep: some View {
@@ -209,7 +352,7 @@ struct PostChantierView: View {
             VStack(alignment: .leading, spacing: 10) {
                 confirmRow(label: "Catégorie", value: selectedCategory ?? "Non défini")
                 confirmRow(label: "Description", value: description.isEmpty ? "Non défini" : description)
-                confirmRow(label: "Localisation", value: location.isEmpty ? "Non défini" : location)
+                confirmRow(label: "Localisation", value: ville.isEmpty ? "Non défini" : "\(ville) \(codePostal)")
                 confirmRow(label: "Budget", value: budget.isEmpty ? "Non défini" : budget)
                 confirmRow(label: "Urgent", value: isUrgent ? "Oui" : "Non")
             }

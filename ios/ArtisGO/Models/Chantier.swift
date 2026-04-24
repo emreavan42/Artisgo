@@ -9,4 +9,9 @@ nonisolated struct Chantier: Identifiable, Hashable, Sendable {
     let isUrgent: Bool
     let description: String
     let budget: String?
+    // Localisation respectueuse de la vie privée : seules ville + CP sont publics
+    let ville: String
+    let codePostal: String
+    let latitude: Double
+    let longitude: Double
 }

@@ -72,6 +72,38 @@ class AppViewModel {
         }
     }
 
+    // Envoi d'un message de type "adresse"
+    func sendAddress(_ address: String, in conversation: Conversation) {
+        let newMessage = ChatMessage(
+            id: UUID().uuidString,
+            text: "",
+            isFromClient: true,
+            timestamp: "À l'instant",
+            isRead: false,
+            isPinned: false,
+            reaction: nil,
+            attachmentType: .location,
+            attachmentName: address,
+            attachmentSize: nil
+        )
+        chatMessages.append(newMessage)
+        if let index = conversations.firstIndex(where: { $0.id == conversation.id }) {
+            let conv = conversations[index]
+            conversations[index] = Conversation(
+                id: conv.id,
+                artisanName: conv.artisanName,
+                profession: conv.profession,
+                lastMessage: "📍 Adresse partagée",
+                timestamp: "À l'instant",
+                unreadCount: conv.unreadCount,
+                isProSeen: false,
+                lastConnection: conv.lastConnection,
+                avatarURL: conv.avatarURL,
+                isPinned: conv.isPinned
+            )
+        }
+    }
+
     func markNotificationRead(_ id: String) {
     if let index = notifications.firstIndex(where: { $0.id == id }) {
         var notif = notifications[index]

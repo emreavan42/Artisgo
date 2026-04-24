@@ -32,6 +32,9 @@ struct ChatView: View {
     @State private var cameraMode: CameraMode = .photo
     @State private var showPDFImporter: Bool = false
     @State private var pendingAttachments: [PendingAttachment] = []
+    @State private var showAddressSheet: Bool = false
+    @State private var adressePromptShown: Bool = false
+    @State private var adressePromptDismissed: Bool = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -55,6 +58,9 @@ struct ChatView: View {
                 }
             }
             quickReplies
+            if adressePromptShown && !adressePromptDismissed {
+                adressePrompt
+            }
             if !pendingAttachments.isEmpty {
                 attachmentsPreview
             }
@@ -98,12 +104,29 @@ struct ChatView: View {
                         showPDFImporter = true
                     }
                 },
+                onPickAddress: {
+                    showAttachmentMenu = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        showAddressSheet = true
+                    }
+                },
                 onCancel: {
                     showAttachmentMenu = false
                 }
             )
-            .presentationDetents([.height(360)])
+            .presentationDetents([.height(420)])
             .presentationDragIndicator(.visible)
+        }
+        .sheet(isPresented: $showAddressSheet) {
+            EnvoyerAdresseView { address, _ in
+                viewModel.sendAddress(address, in: conversation)
+            }
+        }
+        .onChange(of: viewModel.chatMessages.count) { _, count in
+            // Auto-prompt après 5 messages échangés, une seule fois
+            if count >= 5 && !adressePromptShown && !adressePromptDismissed {
+                withAnimation(.easeInOut) { adressePromptShown = true }
+            }
         }
         // Sélecteur de la galerie photos/vidéos (multi)
         .photosPicker(
@@ -241,6 +264,49 @@ struct ChatView: View {
     }
 
     // MARK: - Aperçu horizontal des pièces jointes
+    // MARK: - Auto-prompt "Partager mon adresse"
+    private var adressePrompt: some View {
+        HStack(alignment: .top, spacing: 10) {
+            ArtisgoLogoView(size: 32)
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Vous semblez organiser une visite. Souhaitez-vous partager votre adresse exacte ?")
+                    .font(.caption)
+                    .foregroundStyle(ArtisgoTheme.darkBlue)
+                HStack(spacing: 8) {
+                    Button {
+                        adressePromptDismissed = true
+                        showAddressSheet = true
+                    } label: {
+                        Text("Oui, partager")
+                            .font(.caption.bold())
+                            .foregroundStyle(.white)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(ArtisgoTheme.orange)
+                            .clipShape(Capsule())
+                    }
+                    Button {
+                        withAnimation { adressePromptDismissed = true }
+                    } label: {
+                        Text("Pas maintenant")
+                            .font(.caption.bold())
+                            .foregroundStyle(ArtisgoTheme.darkBlue)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(Color.white)
+                            .clipShape(Capsule())
+                    }
+                }
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(12)
+        .background(ArtisgoTheme.lightBlue)
+        .clipShape(.rect(cornerRadius: 14))
+        .padding(.horizontal, 16)
+        .padding(.vertical, 6)
+    }
+
     private var attachmentsPreview: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 10) {
@@ -379,6 +445,7 @@ private struct AttachmentMenuSheet: View {
     let onPickVideo: () -> Void
     let onPickGallery: () -> Void
     let onPickPDF: () -> Void
+    let onPickAddress: () -> Void
     let onCancel: () -> Void
 
     var body: some View {
@@ -397,6 +464,8 @@ private struct AttachmentMenuSheet: View {
                 AttachmentMenuRow(icon: "photo.on.rectangle.angled", title: "Galerie (photos et vidéos)", action: onPickGallery)
                 Divider().padding(.leading, 64)
                 AttachmentMenuRow(icon: "doc.fill", title: "Document PDF", action: onPickPDF)
+                Divider().padding(.leading, 64)
+                AttachmentMenuRow(icon: "mappin.and.ellipse", title: "Envoyer mon adresse", action: onPickAddress)
             }
             .background(Color(.secondarySystemGroupedBackground))
             .clipShape(.rect(cornerRadius: 14))
@@ -641,7 +710,11 @@ struct MessageBubble: View {
     var body: some View {
         VStack(alignment: message.isFromClient ? .trailing : .leading, spacing: 4) {
             if let attachmentType = message.attachmentType {
-                attachmentView(type: attachmentType)
+                if attachmentType == .location, let address = message.attachmentName {
+                    AdresseMessageView(address: address, isFromClient: message.isFromClient)
+                } else {
+                    attachmentView(type: attachmentType)
+                }
             }
             if !message.text.isEmpty {
                 Text(message.text)

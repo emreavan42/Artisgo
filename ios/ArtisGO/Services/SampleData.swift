@@ -32,9 +32,9 @@ enum SampleData {
     ]
 
     static let chantiers: [Chantier] = [
-        Chantier(id: "1", title: "Rénovation salle de bain", category: "Salle de bain", location: "Écully", distance: 4.2, isUrgent: false, description: "Rénovation complète d'une salle de bain de 8m²", budget: "8 000 - 12 000 €"),
-        Chantier(id: "2", title: "Fuite urgente cuisine", category: "Plomberie", location: "Lyon 3e", distance: 2.1, isUrgent: true, description: "Fuite sous évier, intervention rapide nécessaire", budget: "200 - 500 €"),
-        Chantier(id: "3", title: "Installation tableau électrique", category: "Électricité", location: "Villeurbanne", distance: 6.8, isUrgent: false, description: "Remplacement du tableau électrique principal", budget: "1 500 - 3 000 €")
+        Chantier(id: "1", title: "Rénovation salle de bain", category: "Salle de bain", location: "Écully", distance: 4.2, isUrgent: false, description: "Rénovation complète d'une salle de bain de 8m²", budget: "8 000 - 12 000 €", ville: "Écully", codePostal: "69130", latitude: 45.7780, longitude: 4.7750),
+        Chantier(id: "2", title: "Fuite urgente cuisine", category: "Plomberie", location: "Lyon 3e", distance: 2.1, isUrgent: true, description: "Fuite sous évier, intervention rapide nécessaire", budget: "200 - 500 €", ville: "Lyon", codePostal: "69003", latitude: 45.7500, longitude: 4.8550),
+        Chantier(id: "3", title: "Installation tableau électrique", category: "Électricité", location: "Villeurbanne", distance: 6.8, isUrgent: false, description: "Remplacement du tableau électrique principal", budget: "1 500 - 3 000 €", ville: "Villeurbanne", codePostal: "69100", latitude: 45.7665, longitude: 4.8795)
     ]
 
     static let tradeCategories: [String] = [

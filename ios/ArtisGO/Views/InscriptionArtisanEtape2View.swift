@@ -10,13 +10,19 @@ struct InscriptionArtisanEtape2View: View {
     @State private var statutJuridique: String = ""
     @State private var metierPrincipal: String = ""
     @State private var ville: String = ""
+    @State private var codePostal: String = ""
     @State private var acceptCGU: Bool = false
 
     @State private var siretError: String = ""
+    @State private var cpError: String = ""
     @State private var showSuccess: Bool = false
 
     @FocusState private var focus: Field?
-    enum Field { case nom, siret, ville }
+    enum Field { case nom, siret, ville, cp }
+
+    private var isValidCP: Bool {
+        codePostal.filter(\.isNumber).count == 5
+    }
 
     private let statuts = [
         "Auto-entrepreneur / Micro-entreprise",
@@ -44,7 +50,7 @@ struct InscriptionArtisanEtape2View: View {
     private var isValid: Bool {
         !nomEntreprise.isEmpty && isSiretValid &&
         !statutJuridique.isEmpty && !metierPrincipal.isEmpty &&
-        !ville.isEmpty && acceptCGU
+        !ville.isEmpty && isValidCP && acceptCGU
     }
 
     var body: some View {
@@ -131,6 +137,27 @@ struct InscriptionArtisanEtape2View: View {
                     TextField("", text: $ville)
                         .focused($focus, equals: .ville)
                         .artisgoField(isFocused: focus == .ville)
+                }
+
+                VStack(alignment: .leading, spacing: 4) {
+                    ArtisgoFormField(label: "Code postal", error: cpError) {
+                        TextField("42000", text: $codePostal)
+                            .focused($focus, equals: .cp)
+                            .keyboardType(.numberPad)
+                            .artisgoField(isFocused: focus == .cp, hasError: !cpError.isEmpty)
+                            .onChange(of: codePostal) { _, newValue in
+                                let filtered = String(newValue.filter { $0.isNumber }.prefix(5))
+                                if filtered != newValue { codePostal = filtered }
+                            }
+                    }
+                    Text("Le code postal de votre commune")
+                        .font(.system(size: 12))
+                        .foregroundStyle(.secondary)
+                }
+                .onChange(of: focus) { old, _ in
+                    if old == .cp {
+                        cpError = (codePostal.isEmpty || isValidCP) ? "" : "Code postal invalide (5 chiffres)"
+                    }
                 }
 
                 CGUToggle(isOn: $acceptCGU)
